@@ -8,4 +8,4 @@ $ python manage.py runserver
 ```
 
 ***Note: I was having trouble dealing with the Cross-Origin Resource Sharing mechanism so
-I just turned it off in my brower***
+I just turned it off in my browser***

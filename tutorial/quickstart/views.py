@@ -2,6 +2,7 @@ from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 import numpy as np
+import math
 
 # Create your views here.
 @api_view()
@@ -17,11 +18,20 @@ def transaction(request):
 
  #Generate random number from range of latitude and longitudes
  #Rotate vectors so they are horizontal with Toronto lakeshore
-        x = round(np.random.uniform(-69.66666, -69.323423),6)
+        zero_x = -79.546811
+        zero_y = 43.615780
+        x = round(np.random.uniform(zero_x, -79.212679),6)
+        y = round(np.random.uniform(zero_y, 43.693207),6)
 
-        trans.append({'product_id': i,
+        diff_x = x - zero_x
+        diff_y = y - zero_y
+
+        lat = diff_x * math.cos(math.radians(70.5)) - diff_y * math.sin(math.radians(70.5))
+        lng = diff_x * math.sin(math.radians(70.5)) + diff_y * math.cos(math.radians(70.5))
+    
+        trans.append({'property_id': i,
                     'property_type': property_type,
                     'price': price,
                     'location':
-                    {"lat": x, "lng": x}})
+                    {"lat": lat + zero_y + 0.065 , "lng": lng + zero_x - .025}})
     return Response(trans)
